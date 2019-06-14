@@ -43,7 +43,7 @@ func main() {
 		}
 
 		fname := filepath.Base(abs_path)
-		m.Embed(abs_path)	// this should be updated to take bytes or a reader thingy...
+		m.Embed(abs_path) // this should be updated to take bytes or a reader thingy...
 
 		img := fmt.Sprintf(`<p>Hello world</p><img src="cid:%s" alt="My image" /><p>WUB WUB WUB</p>`, fname)
 		m.SetBody("text/html", img)

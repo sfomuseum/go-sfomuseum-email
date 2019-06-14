@@ -17,7 +17,7 @@ package sender
 import (
 	"bufio"
 	"bytes"
-	_ "github.com/aws/aws-sdk-go/aws"
+	"context"
 	"github.com/aws/aws-sdk-go/service/ses"
 	"github.com/go-gomail/gomail"
 	"github.com/whosonfirst/go-whosonfirst-aws/session"
@@ -44,6 +44,8 @@ func NewSESSender(dsn string) (gomail.Sender, error) {
 		service: svc,
 	}
 
+	// https://docs.aws.amazon.com/sdk-for-go/api/service/ses/#GetSendQuotaOutput
+
 	return &s, nil
 }
 
@@ -63,26 +65,40 @@ func (s *SESSender) Send(from string, to []string, msg io.WriterTo) error {
 	raw_msg := &ses.RawMessage{
 		Data: buf.Bytes(),
 	}
-	
+
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
 	for _, recipient := range to {
 
-		err := s.sendMessage(from, recipient, raw_msg)
+		err := s.sendMessage(ctx, from, recipient, raw_msg)
+
+		// maybe check err here and sometimes continue ?
 
 		if err != nil {
-			return nil
+			return err
 		}
 	}
 
 	return nil
 }
 
-func (s *SESSender) sendMessage(sender string, recipient string, msg *ses.RawMessage) error {
-	
+func (s *SESSender) sendMessage(ctx context.Context, sender string, recipient string, msg *ses.RawMessage) error {
+
+	// throttle send here... (see quota stuff above)
+
+	select {
+	case <-ctx.Done():
+		return nil
+	default:
+		// pass
+	}
+
 	req := &ses.SendRawEmailInput{
 		RawMessage: msg,
 	}
-	
-	_, err := s.service.SendRawEmail(req)
+
+	_, err := s.service.SendRawEmailWithContext(ctx, req)
 
 	if err != nil {
 		return err
