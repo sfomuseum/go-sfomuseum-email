@@ -1,10 +1,7 @@
 github.com/aaronland/go-string v0.1.0 h1:HU6OHmEpN2m9b5SOIwU6HoOq87Fvemj/0g6DTp8yzpk=
 github.com/aaronland/go-string v0.1.0/go.mod h1:2aMIWdTqk63jZsaLLy+p9dsB1MDRqx4sHYoLtkwyYUo=
+github.com/aaronland/gomail v2.0.1+incompatible h1:qCaawLvpmMWSbaBfLvUUcuWMXiksfZINc7WQjqjGKXo=
 github.com/aaronland/gomail v2.0.1+incompatible/go.mod h1:SDeus8DT9zwd3QCYkE+rIViYlR6narNZwKqVD/VJOPA=
-github.com/aaronland/gomail v2.0.3+incompatible h1:7Z6lnWusnwaGljDOOjGE7KVANI04CC/hL7IKrhDy4WA=
-github.com/aaronland/gomail v2.0.3+incompatible/go.mod h1:SDeus8DT9zwd3QCYkE+rIViYlR6narNZwKqVD/VJOPA=
-github.com/aaronland/gomail-ses v0.0.2 h1:ZNfqD5X4SGbu/PWPl2tdLTGgxoJgnWUpfqnbKR6O3Uc=
-github.com/aaronland/gomail-ses v0.0.2/go.mod h1:S8jmXqbtd93MqOMsrq0qkc4IsGv9w1xPgvdaHa87tPU=
 github.com/aws/aws-sdk-go v1.19.31/go.mod h1:KmX6BPdI08NWTb3/sm4ZGu5ShLoqVDhKgpiN924inxo=
 github.com/aws/aws-sdk-go v1.20.1 h1:p9ETyEP9iBPTLul2PHJblv5Iw0PKP10YK6DC5nMTzYM=
 github.com/aws/aws-sdk-go v1.20.1/go.mod h1:KmX6BPdI08NWTb3/sm4ZGu5ShLoqVDhKgpiN924inxo=

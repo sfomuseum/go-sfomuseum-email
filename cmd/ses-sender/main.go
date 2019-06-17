@@ -3,9 +3,10 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/go-gomail/gomail"
-	"github.com/sfomuseum/go-sfomuseum-email/sender"
+	"github.com/aaronland/gomail"
+	"github.com/aaronland/gomail-ses"
 	"log"
+	"os"
 	"path/filepath"
 )
 
@@ -23,7 +24,7 @@ func main() {
 		*recipient_addr = *sender_addr
 	}
 
-	s, err := sender.NewSESSender(*ses_dsn)
+	s, err := ses.NewSESSender(*ses_dsn)
 
 	if err != nil {
 		log.Fatal(err)
@@ -43,7 +44,14 @@ func main() {
 		}
 
 		fname := filepath.Base(abs_path)
-		m.Embed(abs_path) // this should be updated to take bytes or a reader thingy...
+
+		fh, err := os.Open(abs_path)
+
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		m.EmbedReader(fname, fh)
 
 		img := fmt.Sprintf(`<p>Hello world</p><img src="cid:%s" alt="My image" /><p>WUB WUB WUB</p>`, fname)
 		m.SetBody("text/html", img)
